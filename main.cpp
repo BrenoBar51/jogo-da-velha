@@ -3,34 +3,60 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char **argv){
-    int linha = -1, coluna = -1;
-    srand(time(0));
-    // printf("\nSorteio 01: %d", rand() % 10);
-    // printf("\nSorteio 02: %d", rand() % 10);
-    // printf("\nSorteio 03: %d", rand() % 10);
-    // printf("\nSorteio 04: %d", rand() % 10);
-    // printf("\nSorteio 05: %d", rand() % 10);
-    // printf("\nSorteio 06: %d", rand() % 10);
-    char tabuleiro[3][3] = {
-        {' ', ' ', ' '},
-        {' ', ' ', ' '},
-        {' ', ' ', ' '}};
-
-    for (int i = 0; i < 5; i++){
-        do{
-            printf("\nCasa já marcada [%d] [%d].", linha, coluna);
-            linha = rand() % 3;
-            coluna = rand() % 3;
-        } while (tabuleiro[linha][coluna] != ' ');
-        tabuleiro[linha][coluna] = 'x';
-        printf("\nLinha 0: [%c] [%c] [%c]", tabuleiro[0][0], tabuleiro[0][1], tabuleiro[0][2]);
-        printf("\nLinha 1: [%c] [%c] [%c]", tabuleiro[1][0], tabuleiro[1][1], tabuleiro[1][2]);
-        printf("\nLinha 2: [%c] [%c] [%c]", tabuleiro[2][0], tabuleiro[2][1], tabuleiro[2][2]);
-    }
-
-    printf("\nLinha 0: [%c] [%c] [%c]", tabuleiro[0][0], tabuleiro[0][1], tabuleiro[0][2]);
-    printf("\nLinha 1: [%c] [%c] [%c]", tabuleiro[1][0], tabuleiro[1][1], tabuleiro[1][2]);
-    printf("\nLinha 2: [%c] [%c] [%c]", tabuleiro[2][0], tabuleiro[2][1], tabuleiro[2][2]);
-    return 0;
+int main(int argc, char** argv) {
+	int linha = -1, coluna = -1, jogada_linha = -1, jogada_coluna = -1;
+	char cont = ' ';
+	srand(time(0));
+	
+	//Inicializa o tabuleiro sem jogadas
+	char tabuleiro[3][3] = {
+		{' ', ' ', ' '},
+		{' ', ' ', ' '},
+		{' ', ' ', ' '}
+	};
+	
+	do{
+		//Recebe a jogada da maquina
+		do{
+			linha = rand()%3;
+			coluna = rand()%3;
+		}while (tabuleiro[linha][coluna]!=' '); //Fica no laço até a jogada ser valida
+		
+		//Faz a jogada da maquina
+		tabuleiro[linha][coluna] = 'x';	
+		
+		//Apresenta as jogadas do tabuleiro
+		printf("\n\t\t 0   1   2 \n");
+		for(int l=0; l<3; l++){
+			printf("\n\t%d\t", l);
+			for(int c=0; c<3; c++){
+				printf("[%c] ", tabuleiro[l][c]);
+			}
+		}
+		printf("\n\n");
+		
+		//Recebe a jogada do usuario
+		printf("\nDigite a linha: ");
+		scanf("%d", &jogada_linha);
+		printf("\nDigite a coluna: ");
+		scanf("%d", &jogada_coluna);
+		
+		//Faz a jogada do usuario
+		tabuleiro[jogada_linha][jogada_coluna] = 'o';	
+		
+		//Apresenta as jogadas do tabuleiro
+		printf("\n\t\t 0   1   2 \n");
+		for(int l=0; l<3; l++){
+			printf("\n\t%d\t", l);
+			for(int c=0; c<3; c++){
+				printf("[%c] ", tabuleiro[l][c]);
+			}
+		}
+		printf("\n\n");
+		
+		//Pergunta se desejan continuar o jogo
+		printf("Deseja jogar novamente [s][n]:");
+		scanf(" %c", &cont);
+	}while(cont=='s');//Continua o jogo enquanto digitado s
+	return 0;
 }
